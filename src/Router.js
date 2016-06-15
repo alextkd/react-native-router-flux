@@ -7,12 +7,10 @@
  *
  */
 import React, {
-  Component,
-  PropTypes,
+    Component,
+    PropTypes,
 } from 'react';
-import {
-  NavigationExperimental,
-} from 'react-native';
+
 
 import Actions from './Actions';
 import getInitialState from './State';
@@ -20,9 +18,7 @@ import Reducer from './Reducer';
 import DefaultRenderer from './DefaultRenderer';
 import Scene from './Scene';
 
-const {
-  RootContainer: NavigationRootContainer,
-} = NavigationExperimental;
+import RootContainer from './RootContainer';
 
 const propTypes = {
   dispatch: PropTypes.func,
@@ -55,13 +51,13 @@ class Router extends Component {
 
       if (Array.isArray(props.children) || props.children.props.component) {
         scenes = (
-          <Scene
-            key="__root"
-            hideNav
-            {...this.props}
-          >
-            {props.children}
-          </Scene>
+            <Scene
+                key="__root"
+                hideNav
+                {...this.props}
+            >
+              {props.children}
+            </Scene>
         );
       }
       scenesMap = Actions.create(scenes, props.wrapBy);
@@ -76,10 +72,10 @@ class Router extends Component {
     const reducerCreator = props.createReducer || Reducer;
 
     const routerReducer = props.reducer || (
-      reducerCreator({
-        initialState,
-        scenes: scenesMap,
-      }));
+            reducerCreator({
+              initialState,
+              scenes: scenesMap,
+            }));
 
     this.setState({ reducer: routerReducer });
   }
@@ -101,10 +97,10 @@ class Router extends Component {
     if (!this.state.reducer) return null;
 
     return (
-      <NavigationRootContainer
-        reducer={this.state.reducer}
-        renderNavigation={this.renderNavigation}
-      />
+        <RootContainer
+            reducer={this.state.reducer}
+            renderNavigation={this.renderNavigation}
+        />
     );
   }
 }
