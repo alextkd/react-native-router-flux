@@ -458,6 +458,7 @@ class NavBar extends React.Component {
       this.renderBackButton;
     const renderTitle = selected.renderTitle ||
       selected.component.renderTitle ||
+      (new selected.component).renderTitle ||
       this.props.renderTitle;
     return (
       <Animated.View
